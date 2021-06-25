@@ -1,1 +1,17 @@
 venv
+
+# Compiled python modules
+*.pyc
+
+# Setuptools distribution folder
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools
+/*.egg-info
+/*.egg
+
+# PyCharm project files
+/.idea/
+
+# MacOS specific file, we don't want
+.DS_Store

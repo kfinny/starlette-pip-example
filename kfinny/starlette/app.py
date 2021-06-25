@@ -1,3 +1,4 @@
+import os
 from starlette.applications import Starlette
 from starlette.staticfiles import StaticFiles
 from starlette.responses import HTMLResponse
@@ -5,10 +6,14 @@ from starlette.templating import Jinja2Templates
 import uvicorn
 
 
-templates = Jinja2Templates(directory='templates')
+def resolve_dir(relative):
+    return os.path.join(os.path.split(__file__)[0], relative)
+
+
+templates = Jinja2Templates(directory=resolve_dir('templates'))
 
 app = Starlette(debug=True)
-app.mount('/static', StaticFiles(directory='statics'), name='static')
+app.mount('/static', StaticFiles(directory=resolve_dir('statics')), name='static')
 
 
 @app.route('/')
@@ -46,5 +51,5 @@ async def server_error(request, exc):
     return templates.TemplateResponse(template, context, status_code=500)
 
 
-if __name__ == "__main__":
+def main():
     uvicorn.run(app, host='0.0.0.0', port=8000)
